@@ -1,0 +1,18 @@
+{
+  "commit": {
+    "enabled": true,
+    "copyToClipboard": true,
+    "removeText": true,
+    "output": {
+      "prefix": "-",
+      "titlePrefix": "test"
+    }
+  },
+  "clean": {
+    "enabled": true,
+    "identifier": "(:R:)"
+  },
+  "ignoredFiles": [
+    "config.json"
+  ]
+}
