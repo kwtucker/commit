@@ -9,9 +9,10 @@ func UnStageFile(file string) {
 	if file == "" {
 		return
 	}
-	gsArgs := []string{"reset", "HEAD", file}
 
+	gsArgs := []string{"reset", "--", file}
 	gitCommand := exec.Command("git", gsArgs...)
+
 	err := gitCommand.Run()
 	if err != nil {
 		fmt.Println(fmt.Sprintf("could not unstage %s"))

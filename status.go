@@ -14,7 +14,6 @@ func GitStatus() ([]string, error) {
 
 	// Git status command
 	gsArgs := []string{"diff", "--staged", "--name-status"}
-
 	gitStatus := exec.Command("git", gsArgs...)
 
 	// Get stdout and trim the empty last index

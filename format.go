@@ -13,5 +13,5 @@ func FormatFinalCommit(title string, out []string) string {
 		out[i] = str
 	}
 
-	return strings.Join(out, "\n")
+	return strings.Join(out, "\n\n")
 }

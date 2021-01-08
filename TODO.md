@@ -1,6 +1,5 @@
 # TODO
 
-
 1. Add to clipboard. (DONE)
 2. Use Viper configs: https://github.com/spf13/viper
 3. Add Title Prefix. (DONE)

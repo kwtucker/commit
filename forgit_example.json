@@ -4,7 +4,7 @@
     "copyToClipboard": true,
     "removeText": true,
     "output": {
-      "prefix": "-",
+      "prefix": "*",
       "titlePrefix": "test"
     }
   },

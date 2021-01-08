@@ -49,14 +49,12 @@ func main() {
 		final := FormatFinalCommit(title, commits)
 		if final == "" {
 			fmt.Println(noDetectedCommit)
-		} else {
-			fmt.Println("**** Your Commit")
-			fmt.Println("")
-			fmt.Println(final)
 		}
 
 		if Configuration.Commit.CopyToClipboard {
 			toClipboard([]byte("\"" + final + "\""))
+		} else {
+			fmt.Println(final)
 		}
 	}
 
@@ -73,22 +71,20 @@ func main() {
 
 func GetTitle(commitConfig *Commit) string {
 
-	titlePrompt := "-> "
-	titlePrefix := ""
+	titlePrompt := "\n>"
+	var titlePrefix string
 
 	if commitConfig.Output != nil {
 		output := commitConfig.Output
 		if output.TitlePrefix != "" {
 			titlePrefix = output.TitlePrefix
-			titlePrompt = fmt.Sprintf("-> %s ", titlePrefix)
+			titlePrompt = fmt.Sprintf("\n> %s ", titlePrefix)
 		}
 	}
 
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Commit Title")
-	fmt.Println("---------------------")
-
 	title := titlePrefix
+
 	for {
 		fmt.Print(titlePrompt)
 		text, _ := reader.ReadString('\n')
@@ -105,7 +101,6 @@ func GetTitle(commitConfig *Commit) string {
 }
 
 func CleanFiles() error {
-	fmt.Println("**** Cleaning out files now.")
 	return nil
 }
 

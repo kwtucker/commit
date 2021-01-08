@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os/exec"
 	"runtime"
@@ -40,5 +39,4 @@ func toClipboard(output []byte) {
 	}
 
 	copyCmd.Wait()
-	fmt.Println("\n**** Commit copied to clipboard.")
 }
