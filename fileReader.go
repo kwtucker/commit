@@ -32,6 +32,7 @@ func ReadFile(filename string) []string {
 	// opens file with read and write permissions
 	file, err := os.OpenFile(filename, os.O_RDWR, 0666)
 	if err != nil {
+		fmt.Println(filename)
 		fmt.Println(err.Error())
 		os.Exit(0)
 	}
