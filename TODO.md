@@ -6,3 +6,4 @@
 4. Read config file in up directory if there is a ../ in the stage strings.
 5. Debug log removal
    - fmt.Println() // (:R:)
+6. Add a commit init
