@@ -30,11 +30,6 @@ func main() {
 		return
 	}
 
-	if len(modifiedFiles) == 0 {
-		fmt.Println("**** No files are staged yet.")
-		return
-	}
-
 	// Remove ignored files
 	if Configuration.IgnoredFiles != nil {
 		modifiedFiles = RemoveIgnoredFiles(modifiedFiles, Configuration.IgnoredFiles)
@@ -42,8 +37,11 @@ func main() {
 
 	commit := Configuration.Commit
 	if commit != nil {
+		var title string
+		if commit.TitlePrompt {
+			title = GetTitle(commit)
+		}
 
-		title := GetTitle(commit)
 		commits := GetCommits(modifiedFiles)
 
 		final := FormatFinalCommit(title, commits)
@@ -52,10 +50,10 @@ func main() {
 		}
 
 		if Configuration.Commit.CopyToClipboard {
-			toClipboard([]byte("\"" + final + "\""))
-		} else {
-			fmt.Println(final)
+			toClipboard([]byte(final))
 		}
+
+		fmt.Println(final)
 	}
 
 	clean := Configuration.Clean

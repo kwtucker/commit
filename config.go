@@ -18,6 +18,7 @@ type Clean struct {
 }
 
 type Commit struct {
+	TitlePrompt     bool    `json:"titlePrompt"`
 	CopyToClipboard bool    `json:"copyToClipboard"`
 	RemoveText      bool    `json:"removeText"`
 	Output          *Output `json:"output,omitempty"`

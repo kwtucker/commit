@@ -3,6 +3,7 @@
     "enabled": true,
     "copyToClipboard": true,
     "removeText": true,
+    "titlePrompt": false,
     "output": {
       "prefix": "*",
       "titlePrefix": "test"

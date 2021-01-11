@@ -131,7 +131,6 @@ func ReadFile(filename string) []string {
 
 					if startIndex != -1 && endIndex == -1 {
 						lines[i] = val[:startIndex]
-
 					}
 
 					if endIndex != -1 && startIndex == -1 {
