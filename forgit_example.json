@@ -1,6 +1,5 @@
 {
   "commit": {
-    "enabled": true,
     "copyToClipboard": true,
     "removeText": true,
     "titlePrompt": false,
@@ -10,7 +9,6 @@
     }
   },
   "clean": {
-    "enabled": true,
     "identifier": "(:R:)"
   },
   "ignoredFiles": [

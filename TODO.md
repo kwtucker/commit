@@ -10,3 +10,4 @@
 7. Dry run commit to see what will be output.
 8. Remove double space once text is removed in a file. Maybe when there is two spaces on both sides.
 9. Look for .commit (DONE)
+10. Make configuration environment based.
