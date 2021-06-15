@@ -11,3 +11,5 @@
 8. Remove double space once text is removed in a file. Maybe when there is two spaces on both sides.
 9. Look for .commit (DONE)
 10. Make configuration environment based.
+11. Use the prepare-commit-msg git hook for commit messsage suggestion.
+12. User the pre-commit git hook to clean code.
