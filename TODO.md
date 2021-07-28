@@ -1,15 +1,10 @@
 # TODO
 
 1. Add to clipboard. (DONE)
-2. Use Viper configs: https://github.com/spf13/viper
-3. Add Title Prefix. (DONE)
-4. Read config file in up directory if there is a ../ in the stage strings.
-5. Debug log removal
-   - fmt.Println() // (:R:)
-6. Add a commit init
-7. Dry run commit to see what will be output.
+2. Look for .commit (DONE)
+3. Add a commit init
+4. Introduce flags.
+5. Make configuration environment based.
+6. Dry run commit flag to see what will be output.
+7. Read config file in up directory if there is a ../ in the stage strings.
 8. Remove double space once text is removed in a file. Maybe when there is two spaces on both sides.
-9. Look for .commit (DONE)
-10. Make configuration environment based.
-11. Use the prepare-commit-msg git hook for commit messsage suggestion.
-12. User the pre-commit git hook to clean code.

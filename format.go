@@ -5,10 +5,7 @@ import (
 	"strings"
 )
 
-func FormatFinalCommit(title string, out []string) string {
-	if title != "" {
-		out = append([]string{title}, out...)
-	}
+func FormatFinalCommit(out []string) string {
 	for i, commit := range out {
 		space := regexp.MustCompile(`\s+`)
 		str := space.ReplaceAllString(commit, " ")

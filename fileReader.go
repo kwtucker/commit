@@ -20,7 +20,7 @@ func ReadFile(filename string) []string {
 		slice              = []string{}
 		startConcatenation = false
 		temp               string
-		outputPrefix       = "-"
+		outputPrefix       = "*"
 	)
 
 	if Configuration.Commit.Output != nil {
@@ -34,7 +34,7 @@ func ReadFile(filename string) []string {
 	if err != nil {
 		fmt.Println(filename)
 		fmt.Println(err.Error())
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	// Will close the file after main function is finished
@@ -43,7 +43,9 @@ func ReadFile(filename string) []string {
 	// Grab contents of file
 	read, err := ioutil.ReadFile(filename)
 	if err != nil {
-		panic(err)
+		fmt.Println(filename)
+		fmt.Println(err.Error())
+		os.Exit(1)
 	}
 
 	// File content to string

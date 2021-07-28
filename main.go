@@ -10,23 +10,22 @@ import (
 const (
 	norepository             = "No repository in current directory"
 	ignoredDefaultConfigFile = "forgit.json"
-	noDetectedCommit         = "No Commit Messages Detected"
 )
 
 var Configuration *Config
 
 func main() {
 
-	Configuration = &Config{}
-	err := Parse(Configuration)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
+	Configuration = &Config{
+		Commit:       &Commit{},
+		Clean:        &Clean{},
+		IgnoredFiles: []string{},
 	}
+
+	Parse(Configuration)
 
 	modifiedFiles, err := GitStatus()
 	if err != nil {
-		fmt.Println(err.Error())
 		return
 	}
 
@@ -35,36 +34,17 @@ func main() {
 		modifiedFiles = RemoveIgnoredFiles(modifiedFiles, Configuration.IgnoredFiles)
 	}
 
-	commit := Configuration.Commit
-	if commit != nil {
-		var title string
-		if commit.TitlePrompt {
-			title = GetTitle(commit)
-		}
+	commits := GetCommits(modifiedFiles)
 
-		commits := GetCommits(modifiedFiles)
-
-		final := FormatFinalCommit(title, commits)
-		if final == "" {
-			fmt.Println(noDetectedCommit)
-		}
-
-		if Configuration.Commit.CopyToClipboard {
-			toClipboard([]byte(final))
-		}
-
-		fmt.Println(final)
+	final := FormatFinalCommit(commits)
+	if final == "" {
+		return
 	}
 
-	clean := Configuration.Clean
-	if clean != nil {
-		err := CleanFiles()
-		if err != nil {
-			fmt.Println("\nClean Error:")
-			fmt.Println(err.Error())
-		}
+	if Configuration.Commit.CopyToClipboard {
+		toClipboard([]byte(final))
 	}
-
+	fmt.Println(final)
 }
 
 func GetTitle(commitConfig *Commit) string {
@@ -96,10 +76,6 @@ func GetTitle(commitConfig *Commit) string {
 	}
 
 	return title
-}
-
-func CleanFiles() error {
-	return nil
 }
 
 func RemoveIgnoredFiles(fileList, ignoredFiles []string) []string {

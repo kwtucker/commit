@@ -2,14 +2,9 @@
   "commit": {
     "copyToClipboard": true,
     "removeText": true,
-    "titlePrompt": false,
     "output": {
-      "prefix": "*",
-      "titlePrefix": "test"
+      "prefix": "*"
     }
-  },
-  "clean": {
-    "identifier": "(:R:)"
   },
   "ignoredFiles": [
     "config.json"
