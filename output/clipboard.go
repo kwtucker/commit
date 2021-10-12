@@ -1,12 +1,18 @@
-package main
+package output
 
 import (
 	"log"
 	"os/exec"
 	"runtime"
+
+	"github.com/kwtucker/commit/config"
 )
 
-func toClipboard(output []byte) {
+func ToClipboard(cfg *config.Config, output []byte) {
+	if !cfg.Commit.CopyToClipboard {
+		return
+	}
+
 	arch := runtime.GOOS
 
 	var copyCmd *exec.Cmd

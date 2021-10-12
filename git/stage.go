@@ -1,7 +1,6 @@
-package main
+package git
 
 import (
-	"fmt"
 	"os/exec"
 )
 
@@ -15,7 +14,6 @@ func UnStageFile(file string) {
 
 	err := gitCommand.Run()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("could not unstage %s"))
 		return
 	}
 }
@@ -30,7 +28,6 @@ func StageFile(file string) {
 	gitCommand := exec.Command("git", gsArgs...)
 	err := gitCommand.Run()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("could not stage %s"))
 		return
 	}
 }

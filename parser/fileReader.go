@@ -1,11 +1,14 @@
-package main
+package parser
 
 import (
 	"bufio"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 	"strings"
+
+	"github.com/kwtucker/commit/config"
 )
 
 type DelimiterLineRange struct {
@@ -14,7 +17,7 @@ type DelimiterLineRange struct {
 }
 
 // ReadFile reades files and writes
-func ReadFile(filename string) []string {
+func ReadFile(cfg *config.Config, filename string) []string {
 
 	var (
 		slice              = []string{}
@@ -23,9 +26,10 @@ func ReadFile(filename string) []string {
 		outputPrefix       = "*"
 	)
 
-	if Configuration.Commit.Output != nil {
-		if Configuration.Commit.Output.Prefix != "" {
-			outputPrefix = Configuration.Commit.Output.Prefix
+	cfg.FillEnvs(path.Dir(filename))
+	if cfg.Commit.Output != nil {
+		if cfg.Commit.Output.Prefix != "" {
+			outputPrefix = cfg.Commit.Output.Prefix
 		}
 	}
 
@@ -36,7 +40,6 @@ func ReadFile(filename string) []string {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-
 	// Will close the file after main function is finished
 	defer file.Close()
 
@@ -107,12 +110,25 @@ func ReadFile(filename string) []string {
 		temp += " "
 	}
 
+	if cfg.DryRun {
+		// Join lines slice on newline
+		newContents = strings.Join(lines, "\n")
+
+		err = ioutil.WriteFile(filename, []byte(newContents), 0)
+		if err != nil {
+			panic(err)
+		}
+
+		// save changes
+		file.Sync()
+		return slice
+	}
+
 	deleteLines := []int{}
 	for _, delimitersLocation := range modifyIndexes {
 		for i, val := range lines {
 			if i >= delimitersLocation.Start && i <= delimitersLocation.Stop {
-				// TODO: If commit.remove is enabled remove the text.
-				if Configuration.Commit.RemoveText {
+				if cfg.Commit.RemoveText {
 					startIndex := strings.Index(val, "(:")
 					endIndex := strings.Index(val, ":)")
 
@@ -154,7 +170,7 @@ func ReadFile(filename string) []string {
 	}
 
 	// Remove the empty lines from removing the commit text if enabled.
-	if len(deleteLines) > 0 {
+	if len(deleteLines) > 0 && !cfg.DryRun {
 		k := 0
 		for index := 0; index < len(lines); index++ {
 			not := false
