@@ -5,7 +5,7 @@ Commit will help you craft a formatted commit message by reading staged files fo
 ## Install
 
 ```
-$ go install github.com/kwtucker/commit
+$ go get -u github.com/kwtucker/commit
 ```
 
 ## Configuration
