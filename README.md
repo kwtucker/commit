@@ -89,13 +89,14 @@ The commit message can be a single line or span multiple lines both wrapped in t
 1. Stage the files you want to commit.
 
 2. Run the commit command with an optional title message. This will not actually commit to version control. Commit will print a formatted message to use when actually committing.
-```
-$ commit --copy --rm-text -title-msg "Added an exciting feature" 
 
-Added an exciting feature
+    ```
+    $ commit --copy --rm-text -title-msg "Added an exciting feature" 
 
-* feature that will be exiting.
-```
+    Added an exciting feature
+
+    * Feature
+    ```
 
 ## Help
 
