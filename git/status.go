@@ -43,6 +43,14 @@ func GitStatus() ([]string, error) {
 			continue
 		}
 
+		// With the "git status --short" command the staged files are at 0 index.
+		// Unstaged: "?? directory/"
+		//
+		// If there is a question mark that means that it is untracked and unstaged.
+		if unicode.IsPunct(rune(status[0])) {
+			continue
+		}
+
 		// If the file was deleted there is no reason to read that file.
 		if strings.Contains(s[0], "D") {
 			continue

@@ -12,12 +12,13 @@ type Flags struct {
 	DryRun          bool
 	CopyToClipboard bool
 	RemoveText      bool
+	Title           string
 }
 
 type Config struct {
-	Commit       *Commit  `json:"commit,omitempty"`
-	Clean        *Clean   `json:"clean,omitempty"`
-	DryRun       bool     `json:"-"`
+	Commit *Commit `json:"commit,omitempty"`
+	Clean  *Clean  `json:"clean,omitempty"`
+	DryRun bool    `json:"-"`
 }
 
 type Clean struct {
@@ -36,23 +37,27 @@ type Output struct {
 }
 
 func LoadConfig(flags Flags) *Config {
+	_ = godotenv.Load(".env")
 	cfg := &Config{
 		DryRun: flags.DryRun,
 		Commit: &Commit{
 			CopyToClipboard: flags.CopyToClipboard,
 			RemoveText:      flags.RemoveText,
 			Output: &Output{
-				Prefix: "*",
+				Prefix:      "*",
+				TitlePrefix: os.Getenv("COMMIT_TITLE_PREFIX"),
 			},
 		},
 	}
+
 	cfg.FillEnvs(".")
 
 	return cfg
 }
 
 func (c *Config) FillEnvs(dir string) {
-	_ = godotenv.Overload(fmt.Sprintf("%s/.env", dir))
+	_ = godotenv.Load(fmt.Sprintf("%s/.env", dir))
+
 	prefix := os.Getenv("COMMIT_PREFIX")
 	if prefix != "" {
 		c.Commit.Output.Prefix = prefix

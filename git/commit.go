@@ -10,6 +10,8 @@ import (
 func GetCommits(cfg *config.Config, modifiedFiles []string) []string {
 	out := []string{}
 
+	// If a ".commit" file exists in the directory commit is executed
+	// it will be parsed.
 	_, err := os.Stat(".commit")
 	if !os.IsNotExist(err) {
 		out = append(out, parser.ReadFile(cfg, ".commit")...)

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
 	"strings"
 
 	"github.com/kwtucker/commit/config"
@@ -26,7 +25,6 @@ func ReadFile(cfg *config.Config, filename string) []string {
 		outputPrefix       = "*"
 	)
 
-	cfg.FillEnvs(path.Dir(filename))
 	if cfg.Commit.Output != nil {
 		if cfg.Commit.Output.Prefix != "" {
 			outputPrefix = cfg.Commit.Output.Prefix
