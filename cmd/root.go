@@ -39,12 +39,11 @@ var RootCmd = &cobra.Command{
 			return
 		}
 
-		var title string
-		if Title != "" {
-			title = fmt.Sprintf("%s", Title)
+		title := Title
+		if title != "" {
 			if cfg.Commit.Output != nil {
 				if titlePrefix := cfg.Commit.Output.TitlePrefix; titlePrefix != "" {
-					title = fmt.Sprintf("%s %s", titlePrefix, Title)
+					title = fmt.Sprintf("%s %s", titlePrefix, title)
 				}
 			}
 		}

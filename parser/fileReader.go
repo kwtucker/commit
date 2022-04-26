@@ -69,7 +69,7 @@ func ReadFile(cfg *config.Config, filename string) []string {
 
 		for i := 0; i < len(line); i++ {
 			// Identifies a start of a delimiter
-			if StartDelimiter(line, i) && startConcatenation == false {
+			if StartDelimiter(line, i) && !startConcatenation {
 				startConcatenation = true
 				modifyIndexes[currentModifiedIndex] = &DelimiterLineRange{
 					Start: lineCount,
@@ -78,9 +78,9 @@ func ReadFile(cfg *config.Config, filename string) []string {
 				temp = outputPrefix + " "
 				i++
 			} else {
-				if startConcatenation == true {
+				if startConcatenation {
 					// Identifies if this is the second start delimiter before a end is found.
-					if StartDelimiter(line, i) && startConcatenation == true {
+					if StartDelimiter(line, i) && startConcatenation {
 						temp = ""
 						startConcatenation = true
 						modifyIndexes[currentModifiedIndex] = &DelimiterLineRange{

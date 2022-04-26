@@ -39,7 +39,7 @@ func GetTitle(cfg *config.Config) string {
 	for {
 		fmt.Print(titlePrompt)
 		text, _ := reader.ReadString('\n')
-		text = strings.Replace(text, "\n", "", -1)
+		text = strings.ReplaceAll(text, "\n", "")
 		if strings.Compare("", text) == 0 {
 			fmt.Println("Please input a title for your commit.")
 		} else {
