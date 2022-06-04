@@ -17,13 +17,13 @@ var (
 )
 
 func init() {
-	Root.PersistentFlags().BoolVarP(&DryRun, "dry-run", "d", false, "dry run to inspect the result")
-	Root.PersistentFlags().BoolVarP(&CopyToClipboard, "copy", "c", false, "copy commit message to clipboard")
-	Root.PersistentFlags().BoolVarP(&RemoveText, "rm-text", "r", false, "remove text within the delimiters from the file after reading message")
-	Root.PersistentFlags().StringVarP(&Title, "title-msg", "t", "", "quoted title of the commit message")
+	RootCmd.PersistentFlags().BoolVarP(&DryRun, "dry-run", "d", false, "dry run to inspect the result")
+	RootCmd.PersistentFlags().BoolVarP(&CopyToClipboard, "copy", "c", false, "copy commit message to clipboard")
+	RootCmd.PersistentFlags().BoolVarP(&RemoveText, "rm-text", "r", false, "remove text within the delimiters from the file after reading message")
+	RootCmd.PersistentFlags().StringVarP(&Title, "title-msg", "t", "", "quoted title of the commit message")
 }
 
-var Root = &cobra.Command{
+var RootCmd = &cobra.Command{
 	Use:   "commit",
 	Short: "Constructs formatted commit messages",
 	Run: func(cmd *cobra.Command, args []string) {

@@ -6,7 +6,7 @@ import (
 )
 
 func Execute() {
-	if err := Root.Execute(); err != nil {
+	if err := RootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
