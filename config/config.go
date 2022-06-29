@@ -36,8 +36,9 @@ type Output struct {
 	TitlePrefix string `json:"titlePrefix"`
 }
 
+// (:changes to .envrc to use direnv allow.:)
 func LoadConfig(flags Flags) *Config {
-	_ = godotenv.Load(".env")
+	_ = godotenv.Load(".envrc")
 	cfg := &Config{
 		DryRun: flags.DryRun,
 		Commit: &Commit{
@@ -56,7 +57,7 @@ func LoadConfig(flags Flags) *Config {
 }
 
 func (c *Config) FillEnvs(dir string) {
-	_ = godotenv.Load(fmt.Sprintf("%s/.env", dir))
+	_ = godotenv.Load(fmt.Sprintf("%s/.envrc", dir))
 
 	prefix := os.Getenv("COMMIT_PREFIX")
 	if prefix != "" {

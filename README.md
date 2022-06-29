@@ -18,12 +18,13 @@ COMMIT_TITLE_PREFIX=""
 ```
 
 Set in your environment.
+
 ```
 export COMMIT_PREFIX="-"
 export COMMIT_TITLE_PREFIX="Ticket-123:"
 ```
 
-Or Envionment file ".env"
+Or Envionment file ".envrc"
 
 ```
 COMMIT_PREFIX="-"
@@ -35,14 +36,15 @@ COMMIT_TITLE_PREFIX="Ticket-123:"
 Delimiters are use as markers to retrieve the start and end of a commit message entry.
 The commit message can be a single line or span multiple lines both wrapped in the start and end delimiters.
 
-| Delimiter    | Description                 |
-|--------------|-----------------------------|
-| `(:`         | Start of a new commit entry |
-| `:)`         | End of a commit entry       |
+| Delimiter | Description                 |
+| --------- | --------------------------- |
+| `(:`      | Start of a new commit entry |
+| `:)`      | End of a commit entry       |
 
-## How to write commits 
+## How to write commits
 
 - In your source code. The idea here is to write the commit as you code.
+
   ```
   // (:Adds a commit formatter:) <----- This will be read/removed by commit
 
@@ -53,7 +55,7 @@ The commit message can be a single line or span multiple lines both wrapped in t
   ```
 
   Run
-  
+
   ```
   $ commit -t "Commit file"
   Commit file
@@ -74,13 +76,13 @@ The commit message can be a single line or span multiple lines both wrapped in t
   ```
 
   Run
-  
+
   ```
   $ commit -t "Commit file"
   Commit file
 
   * Adds a commit formatter
-  
+
   * This will be concatenated into one line for the final output.
   ```
 
@@ -90,13 +92,13 @@ The commit message can be a single line or span multiple lines both wrapped in t
 
 2. Run the commit command with an optional title message. This will not actually commit to version control. Commit will print a formatted message to use when actually committing.
 
-    ```
-    $ commit --copy --rm-text -title-msg "Added an exciting feature" 
+   ```
+   $ commit --copy --rm-text -title-msg "Added an exciting feature"
 
-    Added an exciting feature
+   Added an exciting feature
 
-    * Feature
-    ```
+   * Feature
+   ```
 
 ## Help
 
@@ -112,6 +114,6 @@ Flags:
   -d, --dry-run            dry run to inspect the result
   -h, --help               help for commit
   -r, --rm-text            remove text within the delimiters from the file after reading message
-  -t, --title-msg string   quoted title of the commit message 
+  -t, --title-msg string   quoted title of the commit message
 
 ```
