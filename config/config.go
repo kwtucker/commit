@@ -36,7 +36,6 @@ type Output struct {
 	TitlePrefix string `json:"titlePrefix"`
 }
 
-// (:changes to .envrc to use direnv allow.:)
 func LoadConfig(flags Flags) *Config {
 	_ = godotenv.Load(".envrc")
 	cfg := &Config{
