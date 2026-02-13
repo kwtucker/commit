@@ -6,8 +6,8 @@ import (
 	"unicode"
 )
 
-// GitStatus gets the git status of the repos directory
-func GitStatus() ([]string, error) {
+// GetStagedFiles gets the staged files of the repos directory
+func GetStagedFiles() ([]string, error) {
 	var (
 		err      error
 		modfiles []string
@@ -47,7 +47,7 @@ func GitStatus() ([]string, error) {
 		// Unstaged: "?? directory/"
 		//
 		// If there is a question mark that means that it is untracked and unstaged.
-		if unicode.IsPunct(rune(status[0])) {
+		if strings.HasPrefix(status, "??") {
 			continue
 		}
 

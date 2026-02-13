@@ -11,41 +11,28 @@ import (
 type Flags struct {
 	DryRun          bool
 	CopyToClipboard bool
-	RemoveText      bool
-	Title           string
 }
 
 type Config struct {
-	Commit *Commit `json:"commit,omitempty"`
-	Clean  *Clean  `json:"clean,omitempty"`
-	DryRun bool    `json:"-"`
-}
-
-type Clean struct {
-	Identifier string `json:"identifier"`
+	CopyToClipboard bool    `json:"copyToClipboard"`
+	Commit          *Commit `json:"commit,omitempty"`
 }
 
 type Commit struct {
-	CopyToClipboard bool    `json:"copyToClipboard"`
-	RemoveText      bool    `json:"removeText"`
-	Output          *Output `json:"output,omitempty"`
+	Format *Format `json:"output,omitempty"`
 }
 
-type Output struct {
-	Prefix      string `json:"prefix"`
-	TitlePrefix string `json:"titlePrefix"`
+type Format struct {
+	BodyPrefix string `json:"bodyPrefix"`
 }
 
 func LoadConfig(flags Flags) *Config {
 	_ = godotenv.Load(".envrc")
 	cfg := &Config{
-		DryRun: flags.DryRun,
+		CopyToClipboard: flags.CopyToClipboard,
 		Commit: &Commit{
-			CopyToClipboard: flags.CopyToClipboard,
-			RemoveText:      flags.RemoveText,
-			Output: &Output{
-				Prefix:      "*",
-				TitlePrefix: os.Getenv("COMMIT_TITLE_PREFIX"),
+			Format: &Format{
+				BodyPrefix: "*",
 			},
 		},
 	}
@@ -58,8 +45,8 @@ func LoadConfig(flags Flags) *Config {
 func (c *Config) FillEnvs(dir string) {
 	_ = godotenv.Load(fmt.Sprintf("%s/.envrc", dir))
 
-	prefix := os.Getenv("COMMIT_PREFIX")
+	prefix := os.Getenv("COMMIT_BODY_PREFIX")
 	if prefix != "" {
-		c.Commit.Output.Prefix = prefix
+		c.Commit.Format.BodyPrefix = prefix
 	}
 }

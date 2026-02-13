@@ -1,28 +1,31 @@
 package git
 
 import (
+	"fmt"
 	"os"
-
-	"github.com/kwtucker/commit/config"
-	"github.com/kwtucker/commit/parser"
+	"os/exec"
 )
 
-func GetCommits(cfg *config.Config, modifiedFiles []string) []string {
-	out := []string{}
-
-	// If a ".commit" file exists in the directory commit is executed
-	// it will be parsed.
-	_, err := os.Stat(".commit")
-	if !os.IsNotExist(err) {
-		out = append(out, parser.ReadFile(cfg, ".commit")...)
+// CommitToGit writes the commit string to a temp file and runs `git commit -F`
+func Commit(commit string) error {
+	tmp, err := os.CreateTemp("", "gitcommit*.txt")
+	if err != nil {
+		return fmt.Errorf("failed to create temp file: %w", err)
 	}
+	defer os.Remove(tmp.Name())
 
-	// Parse Files
-	for _, filename := range modifiedFiles {
-		UnStageFile(filename)
-		out = append(out, parser.ReadFile(cfg, filename)...)
-		StageFile(filename)
+	if _, err := tmp.WriteString(commit); err != nil {
+		return fmt.Errorf("failed to write commit message: %w", err)
 	}
+	tmp.Close()
 
-	return out
+	cmd := exec.Command("git", "commit", "-F", tmp.Name())
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("git commit failed: %w", err)
+	}
+	return nil
 }

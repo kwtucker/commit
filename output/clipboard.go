@@ -9,7 +9,7 @@ import (
 )
 
 func ToClipboard(cfg *config.Config, output []byte) {
-	if !cfg.Commit.CopyToClipboard {
+	if !cfg.CopyToClipboard {
 		return
 	}
 
@@ -27,7 +27,6 @@ func ToClipboard(cfg *config.Config, output []byte) {
 	}
 
 	in, err := copyCmd.StdinPipe()
-
 	if err != nil {
 		log.Fatal(err)
 	}
