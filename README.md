@@ -3,7 +3,7 @@
 ## Install
 
 ```
-$ go install github.com/kwtucker/commit
+go install github.com/kwtucker/commit
 ```
 
 ## Configuration

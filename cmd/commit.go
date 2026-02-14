@@ -6,9 +6,9 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/kwtucker/commit/config"
-	"github.com/kwtucker/commit/git"
 	"github.com/kwtucker/commit/internal/teaui"
-	"github.com/kwtucker/commit/output"
+	"github.com/kwtucker/reef/pkg/clipboard"
+	"github.com/kwtucker/reef/pkg/git"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,7 @@ var RootCmd = &cobra.Command{
 			CopyToClipboard: CopyToClipboard,
 		})
 
-		status, err := git.GetStagedFiles()
+		status, err := git.Staged()
 		if err != nil || len(status) == 0 {
 			fmt.Println("no staged changes", err)
 			os.Exit(1)
@@ -43,7 +43,7 @@ var RootCmd = &cobra.Command{
 		fmt.Println(commit)
 
 		if cfg.CopyToClipboard {
-			output.ToClipboard(cfg, []byte(commit))
+			clipboard.Copy([]byte(commit))
 			return
 		}
 
