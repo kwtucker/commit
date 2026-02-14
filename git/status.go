@@ -51,11 +51,6 @@ func GetStagedFiles() ([]string, error) {
 			continue
 		}
 
-		// If the file was deleted there is no reason to read that file.
-		if strings.Contains(s[0], "D") {
-			continue
-		}
-
 		// Only get the file path.
 		modfiles = append(modfiles, s[len(s)-1])
 	}

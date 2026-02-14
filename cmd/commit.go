@@ -9,7 +9,6 @@ import (
 	"github.com/kwtucker/commit/git"
 	"github.com/kwtucker/commit/internal/teaui"
 	"github.com/kwtucker/commit/output"
-	"github.com/mattn/go-isatty"
 	"github.com/spf13/cobra"
 )
 
@@ -25,17 +24,9 @@ var RootCmd = &cobra.Command{
 
 		status, err := git.GetStagedFiles()
 		if err != nil || len(status) == 0 {
-			// return
-		}
-
-		if cmd != cmd.Root() {
-			fmt.Println("--interactive can only be used on the root command")
+			fmt.Println("no staged changes", err)
 			os.Exit(1)
-		}
-
-		if !isatty.IsTerminal(os.Stdout.Fd()) {
-			fmt.Println("interactive mode requires a TTY")
-			os.Exit(1)
+			return
 		}
 
 		m := teaui.New(cfg.Commit.Format.BodyPrefix)
@@ -43,7 +34,7 @@ var RootCmd = &cobra.Command{
 
 		final, err := p.Run()
 		if err != nil {
-			fmt.Println("interactive mode failed:", err)
+			fmt.Println("commit failed:", err)
 			os.Exit(1)
 		}
 
@@ -51,13 +42,14 @@ var RootCmd = &cobra.Command{
 		commit := final.(teaui.Model).Result()
 		fmt.Println(commit)
 
+		if cfg.CopyToClipboard {
+			output.ToClipboard(cfg, []byte(commit))
+			return
+		}
+
 		if err := git.Commit(commit); err != nil {
 			fmt.Println("failed to commit:", err)
 			os.Exit(1)
-		}
-
-		if cfg.CopyToClipboard {
-			output.ToClipboard(cfg, []byte(commit))
 		}
 	},
 }
