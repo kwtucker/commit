@@ -58,7 +58,7 @@ func New(bodyPrefix string) Model {
 	ta.SetWidth(60)
 	ta.SetHeight(10)
 
-	choices := []string{"feat", "fix", "chore", "docs"}
+	choices := []string{"feat", "fix", "chore", "docs", "style", "refactor", "test", "perf", "build", "ci", "revert"}
 
 	return Model{
 		step:       stepType,
